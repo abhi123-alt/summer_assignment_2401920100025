@@ -1,0 +1,52 @@
+import java.util.*;
+public class minStack{
+      Stack<Long> st= new Stack<>();
+    long min=0;
+    public minStack() {
+        // constructor
+    }
+    
+    public void push(int val) {
+        long x=(long) val;
+        if(st.size()==0){
+            st.push(x);
+            min=x;
+        }
+        else if(x>=min) st.push(x);
+        else if(x<min) {
+            st.push(2*x-min);
+            min=x;
+        }
+    }
+    
+    public void pop() {
+        if(st.size()==0) return ;
+       else if(st.peek()>=min) st.pop();
+       else if(st.peek()<min){  // peek pr fake value h and we should restore the real value;
+            long old= 2*min-st.peek();
+            min=old;
+            st.pop();
+        }
+    }
+    
+    public int top() {
+        if(st.size()==0) return -1;
+        long q= st.peek();
+        if(q>=min) return (int)q;
+        if(q<min) return (int)min;
+        return 0;
+    }
+    
+    public int getMin() {
+        if(st.size()==0) return -1;
+        return (int)min;
+    }
+    public static void main(String[] args) {
+        minStack m= new minStack();
+        m.push(10);
+        m.push(20);
+       m.pop();
+       System.out.println(m.top());
+
+    }
+}
